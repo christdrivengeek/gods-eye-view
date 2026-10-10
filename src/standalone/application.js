@@ -10,6 +10,11 @@ import { createGoogleTokenSource } from '../maps/googleTokens.js';
 
 // The existing controls and layer catalog contain page-scoped state.
 let constructed = false;
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
+    constructed = false;
+  });
+}
 
 /** Compose the standalone application once per page. Reload to start again. */
 export function createStandaloneApplication({

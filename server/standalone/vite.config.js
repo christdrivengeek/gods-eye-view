@@ -21,6 +21,16 @@ export default defineConfig(({ command, mode }) => {
     enforce: 'pre',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
+        if (req.url === '/2244/api/client-log' || req.url === '/api/client-log') {
+          let body = '';
+          req.on('data', (chunk) => { body += chunk; });
+          req.on('end', () => {
+            console.error('[BROWSER CLIENT LOG]', body);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ ok: true }));
+          });
+          return;
+        }
         if (req.url && req.url.startsWith('/2244/api/')) {
           req.url = req.url.slice(5);
         }

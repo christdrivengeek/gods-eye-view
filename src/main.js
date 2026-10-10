@@ -1,17 +1,29 @@
 import { createStandaloneApplication } from './standalone/application.js';
 import { describeError } from './standalone/errors.js';
 
-const application = createStandaloneApplication({
-  googleApiKey: import.meta.env.GOOGLE_MAPS_API_KEY,
-  cesiumToken: import.meta.env.CESIUM_ION_TOKEN,
-  allowQaRegistration: import.meta.env.DEV,
-});
+let application;
+try {
+  application = createStandaloneApplication({
+    googleApiKey: import.meta.env.GOOGLE_MAPS_API_KEY,
+    cesiumToken: import.meta.env.CESIUM_ION_TOKEN,
+    allowQaRegistration: import.meta.env.DEV,
+  });
 
-application.start().catch((error) => {
-  console.error("God's Eye View initialization failed:", error);
+  application.start().catch((error) => {
+    console.error("God's Eye View initialization failed:", error);
+    const loaderStatus = document.querySelector('#loading-screen .loader-status');
+    if (loaderStatus) {
+      loaderStatus.textContent = `Error: ${describeError(error)}`;
+      loaderStatus.style.color = '#ff4444';
+    }
+  });
+} catch (error) {
+  console.error("God's Eye View bootstrap failed:", error);
   const loaderStatus = document.querySelector('#loading-screen .loader-status');
-  loaderStatus.textContent = `Error: ${describeError(error)}`;
-  loaderStatus.style.color = '#ff4444';
-});
+  if (loaderStatus) {
+    loaderStatus.textContent = `Bootstrap error: ${describeError(error)}`;
+    loaderStatus.style.color = '#ff4444';
+  }
+}
 
 export { application };
