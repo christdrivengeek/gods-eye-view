@@ -3,8 +3,8 @@ import { createFlightFeed } from './ingestion.js';
 import * as Cesium from 'cesium';
 import { ENRICH_AMBIENT_BUDGET_CEIL } from './policy.js';
 
-export function createFlightState({ source, services }) {
-  const { createGroundSnap } = services.groundSnap;
+export function createFlightState({ source, services = {} } = {}) {
+  const createGroundSnap = services.groundSnap?.createGroundSnap;
   const flightState = { lifetime: new AbortController() };
   flightState.feed = createFlightFeed(source);
   flightState.records = new FlightRecords({

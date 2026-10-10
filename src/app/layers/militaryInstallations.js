@@ -6,7 +6,7 @@ import * as context from '../../data/contextStore.js';
 import * as picking from '../../data/pickRegistry.js';
 
 /** Construct one layer using the application scene owners and a supplied source. */
-export function createApplicationInstallations({ surface, source }) {
+export function createApplicationInstallations({ surface = {}, source } = {}) {
   const { groundFloor: ground, anchors } = surface;
   return createInstallationsLayer({
     source,

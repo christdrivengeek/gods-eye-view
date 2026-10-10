@@ -5,7 +5,7 @@ import * as globe from '../../celestialRing.js';
 import * as render from '../../renderGovernor.js';
 
 /** Construct one layer using the application scene owners and a supplied source. */
-export function createApplicationRadio({ surface, source }) {
+export function createApplicationRadio({ surface = {}, source } = {}) {
   const { groundFloor: ground } = surface;
   return createRadioLayer({
     source,

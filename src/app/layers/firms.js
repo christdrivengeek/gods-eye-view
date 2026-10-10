@@ -16,13 +16,13 @@ export const firmsServices = {
 };
 
 /** Bind a supplied fire feed to the application scene service owners. */
-export function createApplicationFirms({ surface, ...options }) {
+export function createApplicationFirms({ surface = {}, ...options } = {}) {
   return createLayer({
     ...options,
     icon: options.icon ?? '▲',
     source: options.source ?? 'NASA FIRMS',
     feed: options.feed,
-    services: { ...firmsServices, anchors: surface.anchors },
+    services: { ...firmsServices, anchors: surface?.anchors },
     overlayHost: options.overlayHost ?? {
       setEntries: overlays.setOverlayEntries,
       setVisible: overlays.setOverlaySourceVisible,

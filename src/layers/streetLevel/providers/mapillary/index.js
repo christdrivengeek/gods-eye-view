@@ -64,7 +64,7 @@ function createProviderState(context) {
  * the MapillaryJS viewer. `source` is ./source.js or a stand-in.
  * @returns {import('../../registry.js').StreetLevelProvider}
  */
-export function createMapillaryProvider({ source }) {
+export function createMapillaryProvider({ source } = {}) {
   if (
     !MAPILLARY_SOURCE_METHODS.every(
       (method) => typeof source?.[method] === 'function',

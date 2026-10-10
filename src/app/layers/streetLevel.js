@@ -16,7 +16,7 @@ export function createApplicationStreetLevel({
   providers = sources.mapillary == null
     ? []
     : [createMapillaryProvider({ source: sources.mapillary })],
-}) {
+} = {}) {
   return createStreetLevelLayer({
     providers,
     services: {

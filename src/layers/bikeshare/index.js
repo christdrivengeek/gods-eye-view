@@ -10,7 +10,7 @@ import { createLifecycle } from './lifecycle.js';
 import { createState } from './state.js';
 
 /** Construct one layer with its own scene state and supplied application services. */
-export function createBikeshareLayer({ services, source }) {
+export function createBikeshareLayer({ services, source } = {}) {
   if (typeof source?.getStations !== 'function')
     throw new TypeError('A bikeshare source is required');
   const state = createState({ services });

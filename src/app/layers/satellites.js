@@ -8,7 +8,7 @@ import * as render from '../../renderGovernor.js';
 import * as layerState from '../../data/layerState.js';
 
 /** Construct one layer using the application scene owners and a supplied source. */
-export function createApplicationSatellites({ source }) {
+export function createApplicationSatellites({ source } = {}) {
   return createSatellitesLayer({
     source,
     services: {

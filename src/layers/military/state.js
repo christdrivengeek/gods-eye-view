@@ -2,8 +2,8 @@ import { MilitaryFlightRecords } from './records.js';
 import { createMilitaryFeed } from './ingestion.js';
 import * as Cesium from 'cesium';
 
-export function createFlightState({ source, services }) {
-  const { createGroundSnap } = services.groundSnap;
+export function createFlightState({ source, services = {} } = {}) {
+  const createGroundSnap = services.groundSnap?.createGroundSnap;
   const flightState = { lifetime: new AbortController() };
   flightState.feed = createMilitaryFeed(source);
   flightState.records = new MilitaryFlightRecords({

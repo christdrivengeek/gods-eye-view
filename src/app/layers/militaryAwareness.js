@@ -8,7 +8,7 @@ export function createApplicationAwareness({
   military,
   vessels,
   installations,
-}) {
+} = {}) {
   return createAwarenessLayer({
     services: {
       flights,

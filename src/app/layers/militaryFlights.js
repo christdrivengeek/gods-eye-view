@@ -14,12 +14,12 @@ import * as recession from '../../data/aircraftRecession.js';
 
 /** Construct one layer using the application scene owners and a supplied source. */
 export function createApplicationMilitary({
-  surface,
+  surface = {},
   source,
   militaryRegistry,
   resolveAsset = (url) =>
     `${import.meta.env?.BASE_URL || '/'}${url.replace(/^\//, '')}`,
-}) {
+} = {}) {
   const { groundFloor, meshFloor, groundSnap } = surface;
   return createMilitaryFlightLayer({
     source,

@@ -14,42 +14,6 @@
        names a glyph this list is missing, because a missing glyph does not draw
        a box — the ligature never forms and the element renders the literal word. -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0&icon_names=adjust,arrow_drop_down,arrow_forward,arrow_left,arrow_right,bolt,chevron_left,chevron_right,close,close_fullscreen,dark_mode,draw,east,flare,flight,layers_clear,light_mode,local_fire_department,my_location,navigation,normal,on,open_in_full,public,radar,radio,right_panel_close,right_panel_open,rocket_launch,skip_next,skip_previous,view_in_ar" rel="stylesheet" />
-  <script>
-    (function () {
-      function sendLog(type, msg, stack) {
-        try {
-          var payload = JSON.stringify({ type: type, message: String(msg), stack: stack || '', time: new Date().toISOString() });
-          navigator.sendBeacon ? navigator.sendBeacon('/2244/api/client-log', payload) : fetch('/2244/api/client-log', { method: 'POST', body: payload, headers: { 'Content-Type': 'application/json' } });
-        } catch (_) {}
-      }
-      function displayError(text) {
-        function update() {
-          var el = document.querySelector('#loading-screen .loader-status') || document.querySelector('.loader-status');
-          if (el) {
-            el.textContent = text;
-            el.style.color = '#ff4444';
-          }
-        }
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', update);
-        } else {
-          update();
-        }
-      }
-      window.addEventListener('error', function (e) {
-        var msg = e.message || (e.error && e.error.message) || String(e);
-        var stack = e.error && e.error.stack ? e.error.stack : '';
-        displayError('Startup error: ' + msg);
-        sendLog('window.error', msg, stack);
-      });
-      window.addEventListener('unhandledrejection', function (e) {
-        var msg = e.reason ? (e.reason.message || String(e.reason)) : 'Unhandled rejection';
-        var stack = e.reason && e.reason.stack ? e.reason.stack : '';
-        displayError('Startup error: ' + msg);
-        sendLog('unhandledrejection', msg, stack);
-      });
-    })();
-  </script>
 </head>
 <body>
   <!-- gev:template scene-chrome -->

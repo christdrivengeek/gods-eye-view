@@ -10,7 +10,7 @@ export function createSubmarineCableLayer({
   screenSpaceEventHandlerFactory,
   mapStackEventTarget = null,
   sweepClock = defaultSweepClock,
-}) {
+} = {}) {
   if (!source?.fetch || !source.label)
     throw new TypeError(
       'A cable source with a label and fetch(signal) is required',

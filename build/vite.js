@@ -100,6 +100,10 @@ export function createBrowserViteConfig({
       // Embed-mode documents are framable instead: embed-framing.js rewrites
       // only the frame-ancestors directive and keeps the rest of the policy.
       headers: BROWSER_HEADERS,
+      cors: {
+        origin: true,
+        credentials: true,
+      },
     },
     // The preview server serves the same documents, so it carries the same
     // framing + CSP hardening (one constant, no drift).

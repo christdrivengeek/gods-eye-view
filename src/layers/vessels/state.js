@@ -3,13 +3,13 @@ import { VesselRecords } from './records.js';
 import * as Cesium from 'cesium';
 import { DEFAULT_AIS_RUNTIME } from './policy.js';
 
-export function createVesselState({ source, services }) {
+export function createVesselState({ source, services = {} } = {}) {
   const {
     setOverlayEntries,
     setOverlaySourceVisible,
     clearOverlaySource,
     hitTestWorldOverlay,
-  } = services.overlay;
+  } = services.overlay || {};
   const vesselState = {};
 
   vesselState._source = source;

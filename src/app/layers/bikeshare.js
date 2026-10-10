@@ -5,7 +5,7 @@ import * as picking from '../../data/pickRegistry.js';
 import * as overlays from '../../overlays/worldOverlay.js';
 
 /** Construct one layer using the application scene owners and a supplied source. */
-export function createApplicationBikeshare({ source }) {
+export function createApplicationBikeshare({ source } = {}) {
   return createBikeshareLayer({
     source,
     services: { render, sprites, picking, overlays },

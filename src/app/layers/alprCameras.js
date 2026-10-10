@@ -8,7 +8,7 @@ import { keyholeLabelAlphaFromGeometry } from '../../celestialRing.js';
 import { refreshTrackedReadout } from '../../data/trackedReadout.js';
 
 /** Construct one layer using the application scene owners and a supplied source. */
-export function createApplicationAlpr({ surface, source }) {
+export function createApplicationAlpr({ surface = {}, source } = {}) {
   const { groundFloor } = surface;
   return createAlprCamerasLayer({
     source,

@@ -11,7 +11,7 @@ import * as worldFocus from '../../worldFocus.js';
 import * as render from '../../renderGovernor.js';
 
 /** Construct one layer using the application scene owners and a supplied source. */
-export function createApplicationVessels({ source, options = {} }) {
+export function createApplicationVessels({ source, options = {} } = {}) {
   return createVesselLayer({
     source,
     options,

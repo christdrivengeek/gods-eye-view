@@ -1,6 +1,32 @@
 import { createStandaloneApplication } from './standalone/application.js';
 import { describeError } from './standalone/errors.js';
 
+if (typeof window !== 'undefined') {
+  window.addEventListener('error', (e) => {
+    const msg = e?.message || e?.error?.message || String(e);
+    const stack = e?.error?.stack || '';
+    try {
+      fetch('/2244/api/client-log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'window.error', message: String(msg), stack }),
+      }).catch(() => {});
+    } catch (_) {}
+  });
+
+  window.addEventListener('unhandledrejection', (e) => {
+    const msg = e?.reason?.message || String(e?.reason || 'Unhandled rejection');
+    const stack = e?.reason?.stack || '';
+    try {
+      fetch('/2244/api/client-log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'unhandledrejection', message: String(msg), stack }),
+      }).catch(() => {});
+    } catch (_) {}
+  });
+}
+
 let application;
 try {
   application = createStandaloneApplication({

@@ -22,7 +22,7 @@ import {
  * @param {{surface: object}} options
  * @returns {object}
  */
-export function createApplicationTransit({ surface, source }) {
+export function createApplicationTransit({ surface, source } = {}) {
   if (!surface?.groundFloor || !surface?.meshFloor)
     throw new TypeError('Transit needs the application surface services');
   const { groundFloor, meshFloor } = surface;
