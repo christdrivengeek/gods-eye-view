@@ -337,9 +337,16 @@ export class IntelHUD {
    * collection timestamp. Stores results in {@link _latestMetrics}.
    */
   _updateCameraData() {
-    const camera = this.viewer.camera;
-    const cartographic = camera.positionCartographic;
-    if (!cartographic) return;
+    const camera = this.viewer?.camera;
+    const cartographic = camera?.positionCartographic;
+    if (
+      !cartographic ||
+      !Number.isFinite(cartographic.longitude) ||
+      !Number.isFinite(cartographic.latitude) ||
+      !Number.isFinite(cartographic.height)
+    ) {
+      return;
+    }
 
     const lonDeg = Cesium.Math.toDegrees(cartographic.longitude);
     const latDeg = Cesium.Math.toDegrees(cartographic.latitude);
@@ -474,6 +481,7 @@ export class IntelHUD {
    * @returns {string} Formatted DMS string, e.g. `"38°53'23.10"N"`.
    */
   _toDMS(decimal, type) {
+    if (!Number.isFinite(decimal)) return '---';
     const abs = Math.abs(decimal);
     const deg = Math.floor(abs);
     const minFloat = (abs - deg) * 60;

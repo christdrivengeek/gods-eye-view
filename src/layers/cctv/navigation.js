@@ -58,15 +58,27 @@ export function createNavigation({
       return CCTV_FOCUS_RESULT.TRACKING_HOLDS_VIEW;
     }
     const { camera } = record;
-    const range = Math.max(280, camera.rangeM * 1.18);
+    if (
+      !record.position ||
+      !Number.isFinite(record.position.x) ||
+      !Number.isFinite(record.position.y) ||
+      !Number.isFinite(record.position.z)
+    ) {
+      return CCTV_FOCUS_RESULT.NO_ACTIVE_CAMERA;
+    }
+    const rangeM = Number.isFinite(camera?.rangeM) ? camera.rangeM : 700;
+    const headingDeg = Number.isFinite(camera?.headingDeg)
+      ? camera.headingDeg
+      : 0;
+    const range = Math.max(280, rangeM * 1.18);
     viewer.camera.flyToBoundingSphere(
       new Cesium.BoundingSphere(
         record.position,
-        Math.max(40, camera.rangeM * 0.36),
+        Math.max(40, rangeM * 0.36),
       ),
       {
         offset: new Cesium.HeadingPitchRange(
-          parts.model.toRad(camera.headingDeg),
+          parts.model.toRad(headingDeg),
           parts.model.toRad(-22),
           range,
         ),

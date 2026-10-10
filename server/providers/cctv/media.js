@@ -126,6 +126,7 @@ export async function proxyMediaResponse(
     'Content-Type': contentType,
     'Cache-Control': cacheControl,
     'X-CCTV-Source': sourceHeader,
+    'Access-Control-Allow-Origin': '*',
   };
   if (contentLength) headers['Content-Length'] = contentLength;
   if (contentRange) headers['Content-Range'] = contentRange;

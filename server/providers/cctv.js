@@ -134,6 +134,23 @@ export function cctvProxy({ sourceRoot = process.cwd() } = {}) {
       puller.shutdown();
     });
     server.middlewares.use('/api/cctv', async (req, res) => {
+      if (typeof res.setHeader === 'function') {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader(
+          'Access-Control-Allow-Methods',
+          'GET, HEAD, OPTIONS, DELETE',
+        );
+        res.setHeader('Access-Control-Allow-Headers', '*');
+      }
+      if (req.method === 'OPTIONS') {
+        res.writeHead(204, {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS, DELETE',
+          'Access-Control-Allow-Headers': '*',
+        });
+        res.end();
+        return;
+      }
       try {
         const sources = await getCctvSources();
         const sourceById = new Map(
@@ -226,7 +243,7 @@ export function cctvProxy({ sourceRoot = process.cwd() } = {}) {
             res.end();
             return;
           }
-          if (req.method !== 'GET') {
+          if (req.method !== 'GET' && req.method !== 'HEAD') {
             res.writeHead(405);
             res.end();
             return;
@@ -315,7 +332,7 @@ export function cctvProxy({ sourceRoot = process.cwd() } = {}) {
             }
             return;
           }
-          if (match[2] || req.method !== 'GET') {
+          if (match[2] || (req.method !== 'GET' && req.method !== 'HEAD')) {
             res.writeHead(404);
             res.end();
             return;

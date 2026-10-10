@@ -217,7 +217,19 @@ export function createProjection({
       const video = document.createElement('video');
       video.muted = true;
       video.playsInline = true;
-      video.crossOrigin = 'anonymous';
+      const mediaUrl = parts.frames.mediaUrlFor(record.camera);
+      if (typeof window !== 'undefined' && mediaUrl) {
+        try {
+          if (
+            new URL(mediaUrl, window.location.href).origin !==
+            window.location.origin
+          ) {
+            video.crossOrigin = 'anonymous';
+          }
+        } catch {
+          // Keep default same-origin behavior
+        }
+      }
       video.preload = 'auto';
       // Cesium sizes the video texture from the element's width/height
       // attributes at first upload. Set them from the real stream dimensions
@@ -235,7 +247,7 @@ export function createProjection({
       runtime.video = video;
       runtime.playback = attachCctvVideo(
         video,
-        parts.frames.mediaUrlFor(record.camera),
+        mediaUrl,
         feedType,
         {
           onFailure: () => {
@@ -244,6 +256,17 @@ export function createProjection({
             runtime.mode = 'image';
             runtime.image = new Image();
             runtime.image.decoding = 'async';
+            const fallbackUrl = parts.frames.frameUrlFor(record.camera);
+            if (typeof window !== 'undefined' && fallbackUrl) {
+              try {
+                if (
+                  new URL(fallbackUrl, window.location.href).origin !==
+                  window.location.origin
+                ) {
+                  runtime.image.crossOrigin = 'anonymous';
+                }
+              } catch {}
+            }
             runtime.image.onload = () => {
               runtime.imageLoading = false;
               runtime.imageReady = true;
@@ -262,7 +285,19 @@ export function createProjection({
     } else {
       const img = new Image();
       img.decoding = 'async';
-      img.crossOrigin = 'anonymous';
+      const frameUrl = parts.frames.frameUrlFor(record.camera);
+      if (typeof window !== 'undefined' && frameUrl) {
+        try {
+          if (
+            new URL(frameUrl, window.location.href).origin !==
+            window.location.origin
+          ) {
+            img.crossOrigin = 'anonymous';
+          }
+        } catch {
+          // Keep default same-origin behavior
+        }
+      }
       img.onload = () => {
         runtime.imageLoading = false;
         runtime.imageReady = true;

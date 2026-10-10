@@ -31,7 +31,7 @@ export default defineConfig(({ command, mode }) => {
 
   const config = createBrowserViteConfig({
     plugins: [
-      subpathApiMiddleware(),
+      ...(mode !== 'test' ? [subpathApiMiddleware()] : []),
       ...localProviderPlugins({ realtime: { tools: standaloneVoiceTools() } }),
       localMcpPlugin(),
       apiNotFoundPlugin(),
