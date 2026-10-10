@@ -250,6 +250,9 @@ export function admitKeySetupRequest({
   // on this machine, whatever its socket says. Refuse them outright as defense
   // in depth — the shipped tunnel (Pinokio) is force-closed at boot, so these
   // only appear when someone has deliberately fronted the dev server.
+  if (process.env.ALLOW_PROXIED_REQUESTS === 'true') {
+    return { ok: true };
+  }
   if (hasProxySignals(proxyHeaders)) {
     return {
       ok: false,

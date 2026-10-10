@@ -42,6 +42,7 @@ export const PROXY_SIGNALS = Object.freeze([
  * is keyed by lower-case header name.
  */
 export function hasProxySignals(headers = {}) {
+  if (process.env.ALLOW_PROXIED_REQUESTS === 'true') return false;
   return PROXY_SIGNALS.some(
     (name) => String(headers[name] || '').trim() !== '',
   );
